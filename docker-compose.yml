@@ -21,7 +21,9 @@ services:
     build: backend
     container_name: backend
     environment: 
-      - MENSAGEM=TESTE1
+       DB_CONNECTION: "host='postgres' dbname='postgres' user='postgres' password='postgres'"
+       HOST: "0.0.0.0"
+       PORT: "5000"
     ports:
       - "5000:5000"
     depends_on:

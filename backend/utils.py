@@ -1,6 +1,7 @@
-import psycopg2
+import psycopg2, os
 
-con = psycopg2.connect(host='postgres', database='postgres',user='postgres', password='postgres', port='5432')
+con = psycopg2.connect(os.environ['DB_CONNECTION'])
+
 
 def select(query):
     cursor = con.cursor()

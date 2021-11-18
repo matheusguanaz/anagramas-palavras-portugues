@@ -1,0 +1,52 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres
+    build: db
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "15432:5432"
+    volumes:
+      - ./postgres:/var/lib/postgresql/data 
+    networks:
+       postgres-compose-network:
+        aliases:
+          - postgres
+
+  backend:
+    #image: backend
+    build: backend
+    container_name: backend
+    environment: 
+      - MENSAGEM=TESTE1
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    networks:
+        postgres-compose-network:
+          aliases:
+            - backend
+
+  # redis:
+  #   image: "redis:alpine"
+  #   networks:
+  #     - postgres-compose-network
+
+  frontend:
+    build: frontend
+    container_name: frontend
+    environment:
+      BACKEND_URL: "localhost:5000"
+    ports:
+      - "3000:3000"
+    networks:
+      - postgres-compose-network  
+
+
+networks: 
+  postgres-compose-network:
+    driver: bridge

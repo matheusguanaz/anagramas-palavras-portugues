@@ -1,0 +1,5 @@
+/frontend/node_modules
+extract.py
+main.py
+/postgres
+/__pycache__

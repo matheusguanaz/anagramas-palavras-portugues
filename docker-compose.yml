@@ -17,7 +17,6 @@ services:
           - postgres
 
   backend:
-    #image: backend
     build: backend
     container_name: backend
     environment: 
@@ -32,12 +31,6 @@ services:
         postgres-compose-network:
           aliases:
             - backend
-
-  # redis:
-  #   image: "redis:alpine"
-  #   networks:
-  #     - postgres-compose-network
-
   frontend:
     build: frontend
     container_name: frontend

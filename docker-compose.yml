@@ -42,7 +42,8 @@ services:
     build: frontend
     container_name: frontend
     environment:
-      BACKEND_URL: "localhost:5000"
+      BACKEND_URL: "http://localhost:5000"
+      PORT: 3000
     ports:
       - "3000:3000"
     networks:

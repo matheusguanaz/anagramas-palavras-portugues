@@ -11,13 +11,22 @@ var words_11 = document.getElementById('words-11');
 var words_12 = document.getElementById('words-12');
 var containerImage = document.getElementById('container-image');
 var image = document.createElement('img');
+var backendUrl = '';
+
+const getUrl = async() => {
+  let result = await fetch('/routes');
+  let data = await result.text()
+  backendUrl = data
+}
+
+getUrl();
 
   function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
   }
 
   const enviarDados = async (word) => {
-    await fetch('http://localhost:5000/api/projects', 
+    await fetch(backendUrl+'/api/projects', 
     {
       method : "POST",
       headers: {
@@ -30,7 +39,7 @@ var image = document.createElement('img');
 
   const obterDados = async () => {
     await delay(2000);
-    let result = await fetch('http://localhost:5000/api/projects')
+    let result = await fetch(backendUrl+'/api/projects')
     let words = await result.json()
     return words.response
   }
@@ -50,6 +59,7 @@ var image = document.createElement('img');
     }
   }
 
+  
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
     clearWords();

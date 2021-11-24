@@ -2,7 +2,6 @@ from flask import Flask, request
 from flask_cors import CORS
 import threading, os, utils
 import handWords as hw
-import unidecode
 
 app = Flask(__name__)
 CORS(app)

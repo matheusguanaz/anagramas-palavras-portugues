@@ -4,3 +4,4 @@ main.py
 /postgres
 /__pycache__
 /backend/__pycache__
+insertIntoDB.py

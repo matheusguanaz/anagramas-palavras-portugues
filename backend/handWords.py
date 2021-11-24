@@ -1,4 +1,4 @@
-import utils, itertools, time, sys, threading
+import utils, itertools, time, threading, unidecode
 
 #Converte tupla para string
 def convertTuple(tup):
@@ -20,12 +20,19 @@ def stringsToSearch(array):
             words.append(subset)
     return words
 
+def verifyIfHasStringInList(word, listWords):
+    for itemWord in listWords:
+        if(sorted(word)==sorted(itemWord)):
+            return True
+    return False
+
 #Pega as combinações possiveis e verifica se há correspondencia no banco de dados
 def findRightWords(words):
-    
     oldwords = []
     for word in words:
-        result = utils.select("select * from {0} where palavra like '{1}%'".format(word[0],word))
+        if(word[0]=='ç'):
+            word = word.replace("ç","c")
+        result = utils.select("select * from {0} where unaccent(palavra) SIMILAR TO unaccent('{1}%')".format(unidecode.unidecode(word[0]),word))
         
         if(result and result[0][0].replace("\n","") == word):
             if(not (word in oldwords)):
@@ -36,20 +43,23 @@ def start(wordReceived):
     ini = time.time()
     wordsToCombine = stringsToSearch(wordReceived)
     stringsToCombine = []
-    #threads = []
+    threads = []
     for word in wordsToCombine:
-        stringsToCombine.append(convertTuple(word))
+        stringWord = convertTuple(word)
+        if(not(verifyIfHasStringInList(stringWord, stringsToCombine))):
+            stringsToCombine.append(stringWord)
 
     for string in stringsToCombine:
         words = returnWords(string)
-        # x = threading.Thread(target=findRightWords, args=(words,))
-        # threads.append(x)
-        # x.start()
+        task = threading.Thread(target=findRightWords, args=(words,))
+        threads.append(task)
+        task.start()
         
-        findRightWords(words)
+        #findRightWords(words)
     
         # for thread in threads:
         #     thread.join()
+        threads[-1].join()
     utils.executeQuery("INSERT INTO palavras (palavra, status) VALUES ('1', 0)")
     print(time.time() - ini)
     

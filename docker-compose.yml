@@ -4,21 +4,24 @@ services:
   postgres:
     image: postgres
     build: db
+    container_name: postgres
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
     ports:
       - "15432:5432"
     volumes:
-      - ./postgres:/var/lib/postgresql/data 
+      - ./postgres:/var/lib/postgresql/data
     networks:
-       postgres-compose-network:
+       compose-network:
         aliases:
           - postgres
 
   backend:
     build: backend
     container_name: backend
+    restart: on-failure
+    command: ["./start.sh"]
     environment: 
        DB_CONNECTION: "host='postgres' dbname='postgres' user='postgres' password='postgres'"
        HOST: "0.0.0.0"
@@ -28,9 +31,10 @@ services:
     depends_on:
       - postgres
     networks:
-        postgres-compose-network:
+        compose-network:
           aliases:
             - backend
+
   frontend:
     build: frontend
     container_name: frontend
@@ -40,9 +44,9 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - postgres-compose-network  
+      - compose-network  
 
 
 networks: 
-  postgres-compose-network:
+  compose-network:
     driver: bridge

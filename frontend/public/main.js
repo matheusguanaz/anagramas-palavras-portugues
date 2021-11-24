@@ -1,14 +1,10 @@
 var form = document.getElementById('form');
 var input = document.getElementById('input');
-var words_4 = document.getElementById('words-4');
-var words_5 = document.getElementById('words-5');
-var words_6 = document.getElementById('words-6');
-var words_7 = document.getElementById('words-7');
-var words_8 = document.getElementById('words-8');
-var words_9 = document.getElementById('words-9');
-var words_10 = document.getElementById('words-10');
-var words_11 = document.getElementById('words-11');
-var words_12 = document.getElementById('words-12');
+var words = [];
+for(let i = 4; i < 13;i++){
+  words[i] = document.getElementById(`words-${i}`);
+}
+
 var containerImage = document.getElementById('container-image');
 var image = document.createElement('img');
 var backendUrl = '';
@@ -79,32 +75,32 @@ getUrl();
           item.textContent = dado;
           switch (dado.length) {
             case 4:
-                words_4.appendChild(item);
+                words[4].appendChild(item);
               break;
             case 5:
-                words_5.appendChild(item);
+                words[5].appendChild(item);
                 break;
             case 6:
-                words_6.appendChild(item);
+                words[6].appendChild(item);
                 break;
             case 7:
-                words_7.appendChild(item);
+                words_[7].appendChild(item);
                 break;
             case 8:
-                words_8.appendChild(item);
+                words[8].appendChild(item);
                 break;
             case 9:
-                words_9.appendChild(item);
+                words[9].appendChild(item);
                 break;
             case 10:
-                words_10.appendChild(item);
+                words[10].appendChild(item);
                 break;
             case 11:
-                words_11.appendChild(item);
+                words[11].appendChild(item);
                 break;
 
             default:
-              words_12.appendChild(item);
+              words[12].appendChild(item);
               break;
           }
           

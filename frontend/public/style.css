@@ -83,8 +83,10 @@ body {
 }
 
 .words{
+    display: flex;
     margin-bottom: 20px;
     flex-wrap: wrap;
+    flex-flow: wrap;
 }
 
 .words > *{

@@ -3,3 +3,4 @@ extract.py
 main.py
 /postgres
 /__pycache__
+/backend/__pycache__
